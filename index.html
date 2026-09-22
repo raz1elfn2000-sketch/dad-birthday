@@ -6,14 +6,20 @@
 
     <title>Әкешім, туған күніңізбен! ❤️</title>
 
-    <meta name="description" content="Әкеме туған күніне арналған шағын сыйлығым ❤️">
+    <meta
+        name="description"
+        content="Әкеме туған күніне арналған шағын сыйлығым ❤️"
+    >
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- Бастапқы экран -->
+    <!-- =========================
+         БАСТАПҚЫ ЭКРАН
+    ========================== -->
+
     <section class="welcome-screen" id="welcome">
 
         <div class="welcome-content">
@@ -31,7 +37,10 @@
                 Сізге арналған кішкентай сыйлығым
             </p>
 
-            <button class="start-button" onclick="startMemories()">
+            <button
+                class="start-button"
+                onclick="startMemories()"
+            >
                 Сыйлықты ашу
                 <span>→</span>
             </button>
@@ -41,17 +50,33 @@
     </section>
 
 
-    <!-- Фотосуреттер бөлімі -->
-    <main class="gallery" id="gallery">
+    <!-- =========================
+         ФОТОГРАФИЯЛАР
+    ========================== -->
+
+    <main
+        class="gallery"
+        id="gallery"
+        style="display: none;"
+    >
 
         <div class="gallery-header">
 
             <div class="gallery-title">
-                <span>Біздің естеліктеріміз</span>
+
+                <span>
+                    Біздің естеліктеріміз
+                </span>
+
                 <div class="line"></div>
+
             </div>
 
-            <div class="counter" id="counter">
+
+            <div
+                class="counter"
+                id="counter"
+            >
                 01 / 40
             </div>
 
@@ -60,9 +85,14 @@
 
         <div class="photo-container">
 
-            <button class="arrow left" onclick="previousPhoto()">
+            <button
+                class="arrow left"
+                onclick="previousPhoto()"
+                aria-label="Алдыңғы сурет"
+            >
                 ←
             </button>
+
 
             <div class="photo-wrapper">
 
@@ -72,13 +102,21 @@
                     alt="Отбасылық сурет"
                 >
 
-                <div class="photo-number" id="photoNumber">
+                <div
+                    class="photo-number"
+                    id="photoNumber"
+                >
                     01
                 </div>
 
             </div>
 
-            <button class="arrow right" onclick="nextPhoto()">
+
+            <button
+                class="arrow right"
+                onclick="nextPhoto()"
+                aria-label="Келесі сурет"
+            >
                 →
             </button>
 
@@ -91,22 +129,51 @@
                 Әрбір сәт — өз алдына бір естелік.
             </p>
 
+
             <div class="progress">
-                <div class="progress-bar" id="progressBar"></div>
+
+                <div
+                    class="progress-bar"
+                    id="progressBar"
+                ></div>
+
             </div>
 
-            <button class="finish-button" onclick="showFinal()">
+
+            <button
+                class="finish-button"
+                onclick="showFinal()"
+            >
                 Соңғы сөзге өту
                 <span>→</span>
             </button>
 
         </div>
 
+
+        <!-- Музыка батырмасы -->
+
+        <button
+            class="music-button"
+            id="musicButton"
+            onclick="toggleMusic()"
+            aria-label="Музыканы қосу немесе өшіру"
+        >
+            🔊
+        </button>
+
     </main>
 
 
-    <!-- Соңғы экран -->
-    <section class="final-screen" id="final">
+    <!-- =========================
+         ФИНАЛ
+    ========================== -->
+
+    <section
+        class="final-screen"
+        id="final"
+        style="display: none;"
+    >
 
         <div class="final-content">
 
@@ -114,9 +181,11 @@
                 ♥
             </div>
 
+
             <h2>
                 Әкешім,
             </h2>
+
 
             <p class="final-text">
 
@@ -140,16 +209,32 @@
 
             </p>
 
+
             <h3>
                 Туған күніңіз құтты болсын! ❤️
             </h3>
 
+
             <div class="signature">
+
                 Сүйіспеншілікпен,<br>
-                ұлыңыз Сырым
+                Сіздің Отбасыңыз!
+
             </div>
 
         </div>
+
+
+        <!-- Финалда да музыка батырмасы болады -->
+
+        <button
+            class="music-button final-music-button"
+            id="finalMusicButton"
+            onclick="toggleMusic()"
+            aria-label="Музыканы қосу немесе өшіру"
+        >
+            🔊
+        </button>
 
     </section>
 
