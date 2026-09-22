@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Әкешім, туған күніңізбен! ❤️</title>
+
+    <meta name="description" content="Әкеме туған күніне арналған шағын сыйлығым ❤️">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Бастапқы экран -->
+    <section class="welcome-screen" id="welcome">
+
+        <div class="welcome-content">
+
+            <div class="small-text">
+                52 ЖЫЛ
+            </div>
+
+            <h1>
+                Әкешім,<br>
+                туған күніңізбен! ❤️
+            </h1>
+
+            <p>
+                Сізге арналған кішкентай сыйлығым
+            </p>
+
+            <button class="start-button" onclick="startMemories()">
+                Сыйлықты ашу
+                <span>→</span>
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- Фотосуреттер бөлімі -->
+    <main class="gallery" id="gallery">
+
+        <div class="gallery-header">
+
+            <div class="gallery-title">
+                <span>Біздің естеліктеріміз</span>
+                <div class="line"></div>
+            </div>
+
+            <div class="counter" id="counter">
+                01 / 40
+            </div>
+
+        </div>
+
+
+        <div class="photo-container">
+
+            <button class="arrow left" onclick="previousPhoto()">
+                ←
+            </button>
+
+            <div class="photo-wrapper">
+
+                <img
+                    id="mainPhoto"
+                    src="photos/01.jpg"
+                    alt="Отбасылық сурет"
+                >
+
+                <div class="photo-number" id="photoNumber">
+                    01
+                </div>
+
+            </div>
+
+            <button class="arrow right" onclick="nextPhoto()">
+                →
+            </button>
+
+        </div>
+
+
+        <div class="gallery-bottom">
+
+            <p>
+                Әрбір сәт — өз алдына бір естелік.
+            </p>
+
+            <div class="progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <button class="finish-button" onclick="showFinal()">
+                Соңғы сөзге өту
+                <span>→</span>
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- Соңғы экран -->
+    <section class="final-screen" id="final">
+
+        <div class="final-content">
+
+            <div class="heart">
+                ♥
+            </div>
+
+            <h2>
+                Әкешім,
+            </h2>
+
+            <p class="final-text">
+
+                Сізге айтар алғысым өте көп.
+
+                <br><br>
+
+                Маған берген тәрбиеңіз, қолдауыңыз,
+                ақылыңыз және әрқашан жанымнан
+                табылғаныңыз үшін рақмет.
+
+                <br><br>
+
+                Сізге мықты денсаулық,
+                ұзақ ғұмыр, отбасымызбен бірге
+                бақытты күндер тілеймін.
+
+                <br><br>
+
+                Әр күніңіз қуанышқа толы болсын.
+
+            </p>
+
+            <h3>
+                Туған күніңіз құтты болсын! ❤️
+            </h3>
+
+            <div class="signature">
+                Сүйіспеншілікпен,<br>
+                ұлыңыз Сырым
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

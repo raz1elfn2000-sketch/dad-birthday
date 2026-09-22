@@ -1,0 +1,561 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    background: #0b0b0b;
+    color: white;
+    overflow-x: hidden;
+}
+
+
+/* =========================
+   БАСТАПҚЫ ЭКРАН
+========================= */
+
+.welcome-screen {
+    min-height: 100vh;
+    min-height: 100svh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 30px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #242424 0%,
+            #111111 45%,
+            #050505 100%
+        );
+}
+
+
+.welcome-content {
+    max-width: 700px;
+
+    animation: fadeIn 1.5s ease;
+}
+
+
+.small-text {
+    font-family: Arial, sans-serif;
+
+    font-size: 13px;
+    letter-spacing: 7px;
+
+    color: #b8b8b8;
+
+    margin-bottom: 25px;
+}
+
+
+.welcome-content h1 {
+    font-size: clamp(42px, 7vw, 82px);
+
+    line-height: 1.05;
+
+    font-weight: 400;
+
+    margin-bottom: 30px;
+}
+
+
+.welcome-content p {
+    font-family: Arial, sans-serif;
+
+    color: #aaa;
+
+    font-size: 16px;
+
+    margin-bottom: 45px;
+}
+
+
+.start-button,
+.finish-button {
+    border: 1px solid #777;
+
+    background: transparent;
+
+    color: white;
+
+    padding: 15px 25px;
+
+    border-radius: 30px;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+
+.start-button span,
+.finish-button span {
+    margin-left: 12px;
+}
+
+
+.start-button:hover,
+.finish-button:hover {
+    background: white;
+
+    color: black;
+
+    border-color: white;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   ГАЛЕРЕЯ
+========================= */
+
+.gallery {
+    min-height: 100vh;
+    min-height: 100svh;
+
+    padding: 50px 25px 60px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    background: #0b0b0b;
+}
+
+
+.gallery-header {
+    width: 100%;
+
+    max-width: 1200px;
+
+    margin: 0 auto 30px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+
+.gallery-title {
+    font-family: Arial, sans-serif;
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 3px;
+
+    color: #aaa;
+}
+
+
+.line {
+    width: 45px;
+
+    height: 1px;
+
+    background: #555;
+
+    margin-top: 8px;
+}
+
+
+.counter {
+    font-family: Arial, sans-serif;
+
+    color: #777;
+
+    font-size: 13px;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================
+   ФОТО
+========================= */
+
+.photo-container {
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 30px;
+
+    max-width: 1250px;
+
+    width: 100%;
+
+    margin: auto;
+}
+
+
+.photo-wrapper {
+    position: relative;
+
+    width: min(900px, 75vw);
+
+    height: min(68vh, 650px);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 6px;
+
+    background: #151515;
+}
+
+
+.photo-wrapper img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+
+    transition:
+        opacity 0.45s ease,
+        transform 0.45s ease;
+}
+
+
+.photo-number {
+    position: absolute;
+
+    bottom: 15px;
+    left: 18px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    color: rgba(255,255,255,0.7);
+
+    background: rgba(0,0,0,0.5);
+
+    padding: 7px 10px;
+
+    border-radius: 4px;
+}
+
+
+.arrow {
+    width: 50px;
+    height: 50px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    border: 1px solid #444;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+
+.arrow:hover {
+    background: white;
+
+    color: black;
+
+    border-color: white;
+}
+
+
+/* =========================
+   ТӨМЕНГІ БӨЛІМ
+========================= */
+
+.gallery-bottom {
+    max-width: 700px;
+
+    width: 100%;
+
+    margin: 30px auto 0;
+
+    text-align: center;
+}
+
+
+.gallery-bottom p {
+    font-size: 14px;
+
+    color: #777;
+
+    margin-bottom: 20px;
+}
+
+
+.progress {
+    height: 2px;
+
+    width: 100%;
+
+    background: #252525;
+
+    margin-bottom: 30px;
+
+    overflow: hidden;
+}
+
+
+.progress-bar {
+    width: 2.5%;
+
+    height: 100%;
+
+    background: #aaa;
+
+    transition: width 0.5s ease;
+}
+
+
+/* =========================
+   СОҢҒЫ ЭКРАН
+========================= */
+
+.final-screen {
+    min-height: 100vh;
+    min-height: 100svh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    padding: 60px 25px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #242424 0%,
+            #111111 45%,
+            #050505 100%
+        );
+}
+
+
+.final-content {
+    max-width: 650px;
+
+    animation: fadeIn 1.2s ease;
+}
+
+
+.heart {
+    font-size: 35px;
+
+    margin-bottom: 25px;
+
+    animation: heartbeat 2s infinite;
+}
+
+
+.final-content h2 {
+    font-size: clamp(40px, 6vw, 65px);
+
+    font-weight: 400;
+
+    margin-bottom: 30px;
+}
+
+
+.final-text {
+    font-size: 17px;
+
+    line-height: 1.8;
+
+    color: #c5c5c5;
+}
+
+
+.final-content h3 {
+    font-size: 23px;
+
+    font-weight: 400;
+
+    margin-top: 35px;
+}
+
+
+.signature {
+    font-family: Arial, sans-serif;
+
+    font-size: 13px;
+
+    color: #777;
+
+    line-height: 1.7;
+
+    margin-top: 45px;
+}
+
+
+/* =========================
+   АНИМАЦИИ
+========================= */
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+@keyframes heartbeat {
+
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+
+}
+
+
+/* =========================
+   МОБИЛЬНАЯ ВЕРСИЯ
+========================= */
+
+@media (max-width: 700px) {
+
+    .welcome-screen {
+        padding: 25px;
+    }
+
+
+    .welcome-content h1 {
+        font-size: 43px;
+    }
+
+
+    .gallery {
+        padding: 30px 15px 35px;
+    }
+
+
+    .gallery-header {
+        margin-bottom: 15px;
+    }
+
+
+    .gallery-title {
+        font-size: 9px;
+
+        letter-spacing: 2px;
+    }
+
+
+    .counter {
+        font-size: 10px;
+    }
+
+
+    .photo-container {
+        gap: 8px;
+    }
+
+
+    .photo-wrapper {
+        width: calc(100vw - 95px);
+
+        height: 62vh;
+
+        border-radius: 4px;
+    }
+
+
+    .arrow {
+        width: 38px;
+        height: 38px;
+
+        font-size: 15px;
+    }
+
+
+    .gallery-bottom {
+        margin-top: 20px;
+    }
+
+
+    .gallery-bottom p {
+        font-size: 12px;
+    }
+
+
+    .finish-button {
+        padding: 12px 18px;
+
+        font-size: 12px;
+    }
+
+
+    .final-screen {
+        padding: 45px 25px;
+    }
+
+
+    .final-text {
+        font-size: 15px;
+
+        line-height: 1.7;
+    }
+
+
+    .final-content h3 {
+        font-size: 20px;
+    }
+
+}

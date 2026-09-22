@@ -1,0 +1,318 @@
+/* =========================================
+   ФОТОГРАФИИ
+========================================= */
+
+const photos = [
+
+    "photos/01.jpg",
+    "photos/02.jpg",
+    "photos/03.jpg",
+    "photos/04.jpg",
+    "photos/05.jpg",
+    "photos/06.jpg",
+    "photos/07.jpg",
+    "photos/08.jpg",
+    "photos/09.jpg",
+    "photos/10.jpg",
+
+    "photos/11.jpg",
+    "photos/12.jpg",
+    "photos/13.jpg",
+    "photos/14.jpg",
+    "photos/15.jpg",
+    "photos/16.jpg",
+    "photos/17.jpg",
+    "photos/18.jpg",
+    "photos/19.jpg",
+    "photos/20.jpg",
+
+    "photos/21.jpg",
+    "photos/22.jpg",
+    "photos/23.jpg",
+    "photos/24.jpg",
+    "photos/25.jpg",
+    "photos/26.jpg",
+    "photos/27.jpg",
+    "photos/28.jpg",
+    "photos/29.jpg",
+    "photos/30.jpg",
+
+    "photos/31.jpg",
+    "photos/32.jpg",
+    "photos/33.jpg",
+    "photos/34.jpg",
+    "photos/35.jpg",
+    "photos/36.jpg",
+    "photos/37.jpg",
+    "photos/38.jpg",
+    "photos/39.jpg",
+    "photos/40.jpg"
+
+];
+
+
+/* =========================================
+   НАСТРОЙКИ
+========================================= */
+
+let currentPhoto = 0;
+
+let autoSlide;
+
+
+/* =========================================
+   ЭЛЕМЕНТЫ
+========================================= */
+
+const welcome = document.getElementById("welcome");
+
+const gallery = document.getElementById("gallery");
+
+const finalScreen = document.getElementById("final");
+
+const mainPhoto = document.getElementById("mainPhoto");
+
+const counter = document.getElementById("counter");
+
+const photoNumber = document.getElementById("photoNumber");
+
+const progressBar = document.getElementById("progressBar");
+
+
+/* =========================================
+   НАЧАЛО
+========================================= */
+
+function startMemories() {
+
+    welcome.style.display = "none";
+
+    gallery.style.display = "flex";
+
+    finalScreen.style.display = "none";
+
+    showPhoto(0);
+
+    startAutoSlide();
+
+}
+
+
+/* =========================================
+   ПОКАЗ ФОТО
+========================================= */
+
+function showPhoto(index) {
+
+    if (index < 0) {
+        index = photos.length - 1;
+    }
+
+    if (index >= photos.length) {
+        index = 0;
+    }
+
+    currentPhoto = index;
+
+
+    /*
+       Плавно скрываем фотографию
+    */
+
+    mainPhoto.style.opacity = "0";
+
+    mainPhoto.style.transform = "scale(0.98)";
+
+
+    setTimeout(() => {
+
+        mainPhoto.src = photos[currentPhoto];
+
+        mainPhoto.onload = () => {
+
+            mainPhoto.style.opacity = "1";
+
+            mainPhoto.style.transform = "scale(1)";
+
+        };
+
+    }, 200);
+
+
+    updateInterface();
+
+}
+
+
+/* =========================================
+   ИНФОРМАЦИЯ ПОД ФОТО
+========================================= */
+
+function updateInterface() {
+
+    const number = currentPhoto + 1;
+
+    const formattedNumber =
+        String(number).padStart(2, "0");
+
+    counter.textContent =
+        `${formattedNumber} / ${photos.length}`;
+
+    photoNumber.textContent =
+        formattedNumber;
+
+
+    const progress =
+        (number / photos.length) * 100;
+
+    progressBar.style.width =
+        `${progress}%`;
+
+}
+
+
+/* =========================================
+   СЛЕДУЮЩЕЕ ФОТО
+========================================= */
+
+function nextPhoto() {
+
+    showPhoto(currentPhoto + 1);
+
+    restartAutoSlide();
+
+}
+
+
+/* =========================================
+   ПРЕДЫДУЩЕЕ ФОТО
+========================================= */
+
+function previousPhoto() {
+
+    showPhoto(currentPhoto - 1);
+
+    restartAutoSlide();
+
+}
+
+
+/* =========================================
+   АВТОМАТИЧЕСКАЯ СМЕНА
+========================================= */
+
+function startAutoSlide() {
+
+    autoSlide = setInterval(() => {
+
+        showPhoto(currentPhoto + 1);
+
+    }, 4500);
+
+}
+
+
+/* =========================================
+   ПЕРЕЗАПУСК АВТОСЛАЙДА
+========================================= */
+
+function restartAutoSlide() {
+
+    clearInterval(autoSlide);
+
+    startAutoSlide();
+
+}
+
+
+/* =========================================
+   ФИНАЛ
+========================================= */
+
+function showFinal() {
+
+    clearInterval(autoSlide);
+
+    gallery.style.display = "none";
+
+    finalScreen.style.display = "flex";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =========================================
+   СВАЙП НА ТЕЛЕФОНЕ
+========================================= */
+
+let touchStartX = 0;
+
+let touchEndX = 0;
+
+
+mainPhoto.addEventListener("touchstart", function(event) {
+
+    touchStartX =
+        event.changedTouches[0].screenX;
+
+});
+
+
+mainPhoto.addEventListener("touchend", function(event) {
+
+    touchEndX =
+        event.changedTouches[0].screenX;
+
+    handleSwipe();
+
+});
+
+
+function handleSwipe() {
+
+    const difference =
+        touchStartX - touchEndX;
+
+
+    if (Math.abs(difference) < 50) {
+        return;
+    }
+
+
+    if (difference > 0) {
+
+        nextPhoto();
+
+    } else {
+
+        previousPhoto();
+
+    }
+
+}
+
+
+/* =========================================
+   КЛАВИАТУРА
+========================================= */
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "ArrowRight") {
+
+        nextPhoto();
+
+    }
+
+
+    if (event.key === "ArrowLeft") {
+
+        previousPhoto();
+
+    }
+
+});
