@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="kk">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Әкешім, туған күніңізбен! ❤️</title>
 
     <meta
-        name="description"
-        content="Әкеме туған күніне арналған шағын сыйлығым ❤️"
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
     >
+
+    <title>Әкешім, туған күніңізбен! ❤️</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
 
-    <!-- =========================
-         БАСТАПҚЫ ЭКРАН
-    ========================== -->
+
+    <!-- БАСТАПҚЫ ЭКРАН -->
 
     <section class="welcome-screen" id="welcome">
 
@@ -50,9 +50,8 @@
     </section>
 
 
-    <!-- =========================
-         ФОТОГРАФИЯЛАР
-    ========================== -->
+
+    <!-- ГАЛЕРЕЯ -->
 
     <main
         class="gallery"
@@ -83,12 +82,12 @@
         </div>
 
 
+
         <div class="photo-container">
 
             <button
-                class="arrow left"
+                class="arrow"
                 onclick="previousPhoto()"
-                aria-label="Алдыңғы сурет"
             >
                 ←
             </button>
@@ -113,14 +112,14 @@
 
 
             <button
-                class="arrow right"
+                class="arrow"
                 onclick="nextPhoto()"
-                aria-label="Келесі сурет"
             >
                 →
             </button>
 
         </div>
+
 
 
         <div class="gallery-bottom">
@@ -140,8 +139,11 @@
             </div>
 
 
+            <!-- СНАЧАЛА КНОПКА СКРЫТА -->
+
             <button
                 class="finish-button"
+                id="finishButton"
                 onclick="showFinal()"
             >
                 Соңғы сөзге өту
@@ -151,13 +153,13 @@
         </div>
 
 
-        <!-- Музыка батырмасы -->
+
+        <!-- МУЗЫКА -->
 
         <button
             class="music-button"
             id="musicButton"
             onclick="toggleMusic()"
-            aria-label="Музыканы қосу немесе өшіру"
         >
             🔊
         </button>
@@ -165,9 +167,8 @@
     </main>
 
 
-    <!-- =========================
-         ФИНАЛ
-    ========================== -->
+
+    <!-- ФИНАЛ -->
 
     <section
         class="final-screen"
@@ -218,25 +219,39 @@
             <div class="signature">
 
                 Сүйіспеншілікпен,<br>
-                Сіздің Отбасыңыз!
+                ұлыңыз Сырым
 
             </div>
 
         </div>
 
 
-        <!-- Финалда да музыка батырмасы болады -->
-
         <button
-            class="music-button final-music-button"
-            id="finalMusicButton"
+            class="music-button"
             onclick="toggleMusic()"
-            aria-label="Музыканы қосу немесе өшіру"
         >
             🔊
         </button>
 
     </section>
+
+
+
+    <!-- МУЗЫКАЛЬНЫЙ ФАЙЛ -->
+
+    <audio
+        id="backgroundMusic"
+        src="music/music.mp3"
+        preload="auto"
+        loop
+    ></audio>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
 
 
     <script src="script.js"></script>
