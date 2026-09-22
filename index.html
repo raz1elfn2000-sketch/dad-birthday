@@ -3,23 +3,16 @@
 
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Әкешім, туған күніңізбен! ❤️</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
-
 <body>
 
-
     <!-- БАСТАПҚЫ ЭКРАН -->
-
     <section class="welcome-screen" id="welcome">
 
         <div class="welcome-content">
@@ -37,10 +30,7 @@
                 Сізге арналған кішкентай сыйлығым
             </p>
 
-            <button
-                class="start-button"
-                onclick="startMemories()"
-            >
+            <button class="start-button" onclick="startMemories()">
                 Сыйлықты ашу
                 <span>→</span>
             </button>
@@ -50,14 +40,8 @@
     </section>
 
 
-
     <!-- ГАЛЕРЕЯ -->
-
-    <main
-        class="gallery"
-        id="gallery"
-        style="display: none;"
-    >
+    <main class="gallery" id="gallery" style="display: none;">
 
         <div class="gallery-header">
 
@@ -71,27 +55,18 @@
 
             </div>
 
-
-            <div
-                class="counter"
-                id="counter"
-            >
+            <div class="counter" id="counter">
                 01 / 40
             </div>
 
         </div>
 
 
-
         <div class="photo-container">
 
-            <button
-                class="arrow"
-                onclick="previousPhoto()"
-            >
+            <button class="arrow" onclick="previousPhoto()">
                 ←
             </button>
-
 
             <div class="photo-wrapper">
 
@@ -101,25 +76,17 @@
                     alt="Отбасылық сурет"
                 >
 
-                <div
-                    class="photo-number"
-                    id="photoNumber"
-                >
+                <div class="photo-number" id="photoNumber">
                     01
                 </div>
 
             </div>
 
-
-            <button
-                class="arrow"
-                onclick="nextPhoto()"
-            >
+            <button class="arrow" onclick="nextPhoto()">
                 →
             </button>
 
         </div>
-
 
 
         <div class="gallery-bottom">
@@ -127,7 +94,6 @@
             <p>
                 Әрбір сәт — өз алдына бір естелік.
             </p>
-
 
             <div class="progress">
 
@@ -139,12 +105,12 @@
             </div>
 
 
-            <!-- СНАЧАЛА КНОПКА СКРЫТА -->
-
+            <!-- ФИНАЛЬНАЯ КНОПКА -->
             <button
                 class="finish-button"
                 id="finishButton"
                 onclick="showFinal()"
+                style="display: none;"
             >
                 Соңғы сөзге өту
                 <span>→</span>
@@ -153,9 +119,7 @@
         </div>
 
 
-
         <!-- МУЗЫКА -->
-
         <button
             class="music-button"
             id="musicButton"
@@ -167,9 +131,7 @@
     </main>
 
 
-
     <!-- ФИНАЛ -->
-
     <section
         class="final-screen"
         id="final"
@@ -182,11 +144,9 @@
                 ♥
             </div>
 
-
             <h2>
                 Әкешім,
             </h2>
-
 
             <p class="final-text">
 
@@ -210,11 +170,9 @@
 
             </p>
 
-
             <h3>
                 Туған күніңіз құтты болсын! ❤️
             </h3>
-
 
             <div class="signature">
 
@@ -236,12 +194,11 @@
     </section>
 
 
-
-    <!-- МУЗЫКАЛЬНЫЙ ФАЙЛ -->
-
+    <!-- МУЗЫКА -->
+    <!-- ФАЙЛ music.mp3 ЛЕЖИТ РЯДОМ С index.html -->
     <audio
         id="backgroundMusic"
-        src="music/music.mp3"
+        src="music.mp3"
         preload="auto"
         loop
     ></audio>
@@ -250,11 +207,6 @@
     <script src="script.js"></script>
 
 </body>
-
 </html>
 
 
-    <script src="script.js"></script>
-
-</body>
-</html>
