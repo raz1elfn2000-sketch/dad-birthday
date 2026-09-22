@@ -1,5 +1,5 @@
 /* =========================================
-   ФОТОГРАФИЯЛАР
+   ФОТО
 ========================================= */
 
 const photos = [
@@ -52,29 +52,18 @@ const photos = [
 
 
 /* =========================================
-   НАСТРОЙКИ
+   ПЕРЕМЕННЫЕ
 ========================================= */
 
 let currentPhoto = 0;
 
-let autoSlide;
+let autoSlide = null;
 
 let musicPlaying = false;
 
 
 /* =========================================
-   МУЗЫКА
-========================================= */
-
-const music = new Audio("music/music.mp3");
-
-music.loop = true;
-
-music.volume = 0.45;
-
-
-/* =========================================
-   ЭЛЕМЕНТЫ СТРАНИЦЫ
+   ЭЛЕМЕНТЫ
 ========================================= */
 
 const welcome =
@@ -98,71 +87,73 @@ const photoNumber =
 const progressBar =
     document.getElementById("progressBar");
 
-const musicButton =
-    document.getElementById("musicButton");
+const finishButton =
+    document.getElementById("finishButton");
 
-const finalMusicButton =
-    document.getElementById("finalMusicButton");
+const music =
+    document.getElementById("backgroundMusic");
+
+const musicButtons =
+    document.querySelectorAll(".music-button");
 
 
 /* =========================================
-   НАЧАЛО ПОДАРКА
+   НАЧАЛО
 ========================================= */
 
 function startMemories() {
 
-    /*
-       Прячем первый экран
-    */
-
     welcome.style.display = "none";
 
-
-    /*
-       Показываем фотографии
-    */
-
     gallery.style.display = "flex";
-
-
-    /*
-       Прячем финал
-    */
 
     finalScreen.style.display = "none";
 
 
     /*
-       Показываем первую фотографию
+       На всякий случай
+       кнопка финала снова скрыта.
     */
 
-    showPhoto(0);
+    finishButton.style.display = "none";
 
 
     /*
-       Начинаем автоматическую смену
+       Первая фотография
+    */
+
+    currentPhoto = 0;
+
+    showPhoto(currentPhoto);
+
+
+    /*
+       Запускаем автоматическую смену
     */
 
     startAutoSlide();
 
 
     /*
-       И самое главное —
-       запускаем музыку после нажатия кнопки
+       ЗАПУСКАЕМ МУЗЫКУ
     */
+
+    music.currentTime = 0;
+
+    music.volume = 0.45;
 
     music.play()
         .then(() => {
 
             musicPlaying = true;
 
-            updateMusicButtons();
+            updateMusicButton();
 
         })
         .catch((error) => {
 
-            console.log(
-                "Музыку не удалось запустить:",
+            console.error(
+                "Ошибка запуска музыки:",
                 error
             );
 
@@ -172,7 +163,7 @@ function startMemories() {
 
 
 /* =========================================
-   ПОКАЗ ФОТОГРАФИИ
+   ПОКАЗ ФОТО
 ========================================= */
 
 function showPhoto(index) {
@@ -186,7 +177,7 @@ function showPhoto(index) {
 
     if (index >= photos.length) {
 
-        index = 0;
+        index = photos.length - 1;
 
     }
 
@@ -195,12 +186,13 @@ function showPhoto(index) {
 
 
     /*
-       Плавно скрываем фотографию
+       Анимация
     */
 
     mainPhoto.style.opacity = "0";
 
-    mainPhoto.style.transform = "scale(0.98)";
+    mainPhoto.style.transform =
+        "scale(0.98)";
 
 
     setTimeout(() => {
@@ -223,11 +215,39 @@ function showPhoto(index) {
 
     updateInterface();
 
+
+    /*
+       ПРОВЕРЯЕМ:
+       если это 40-я фотография
+    */
+
+    if (currentPhoto === photos.length - 1) {
+
+        clearInterval(autoSlide);
+
+        /*
+           Показываем кнопку финала
+        */
+
+        finishButton.style.display =
+            "inline-block";
+
+    } else {
+
+        /*
+           До 40-й кнопка скрыта
+        */
+
+        finishButton.style.display =
+            "none";
+
+    }
+
 }
 
 
 /* =========================================
-   ОБНОВЛЕНИЕ СЧЁТЧИКА
+   ИНФОРМАЦИЯ
 ========================================= */
 
 function updateInterface() {
@@ -259,20 +279,17 @@ function updateInterface() {
 
 
 /* =========================================
-   СЛЕДУЮЩАЯ ФОТОГРАФИЯ
+   NEXT
 ========================================= */
 
 function nextPhoto() {
 
     /*
-       Если сейчас 40-я фотография,
-       дальше автоматически не переходим
-       к первой.
+       Если уже 40-я —
+       дальше не идём.
     */
 
-    if (currentPhoto === photos.length - 1) {
-
-        clearInterval(autoSlide);
+    if (currentPhoto >= photos.length - 1) {
 
         return;
 
@@ -287,20 +304,28 @@ function nextPhoto() {
 
 
 /* =========================================
-   ПРЕДЫДУЩАЯ ФОТОГРАФИЯ
+   PREVIOUS
 ========================================= */
 
 function previousPhoto() {
 
-    showPhoto(currentPhoto - 1);
+    /*
+       Можно вернуться назад
+    */
 
-    restartAutoSlide();
+    if (currentPhoto > 0) {
+
+        showPhoto(currentPhoto - 1);
+
+        restartAutoSlide();
+
+    }
 
 }
 
 
 /* =========================================
-   АВТОМАТИЧЕСКАЯ СМЕНА
+   АВТОСЛАЙД
 ========================================= */
 
 function startAutoSlide() {
@@ -309,11 +334,6 @@ function startAutoSlide() {
 
 
     autoSlide = setInterval(() => {
-
-        /*
-           Если дошли до 40-й фотографии,
-           останавливаем автоматическую смену.
-        */
 
         if (currentPhoto >= photos.length - 1) {
 
@@ -332,7 +352,7 @@ function startAutoSlide() {
 
 
 /* =========================================
-   ПЕРЕЗАПУСК АВТОСЛАЙДА
+   RESTART
 ========================================= */
 
 function restartAutoSlide() {
@@ -345,35 +365,33 @@ function restartAutoSlide() {
 
 
 /* =========================================
-   ПОКАЗ ФИНАЛА
+   ФИНАЛ
 ========================================= */
 
 function showFinal() {
 
     /*
-       Останавливаем смену фотографий
+       На всякий случай разрешаем
+       финал только после 40-й.
     */
+
+    if (currentPhoto !== photos.length - 1) {
+
+        return;
+
+    }
+
 
     clearInterval(autoSlide);
 
 
-    /*
-       Прячем галерею
-    */
-
     gallery.style.display = "none";
-
-
-    /*
-       Показываем финальное поздравление
-    */
 
     finalScreen.style.display = "flex";
 
 
     /*
        Музыку НЕ останавливаем.
-       Она продолжает играть.
     */
 
     window.scrollTo({
@@ -388,7 +406,7 @@ function showFinal() {
 
 
 /* =========================================
-   МУЗЫКА ON / OFF
+   МУЗЫКА
 ========================================= */
 
 function toggleMusic() {
@@ -406,11 +424,13 @@ function toggleMusic() {
 
                 musicPlaying = true;
 
+                updateMusicButton();
+
             })
             .catch((error) => {
 
-                console.log(
-                    "Не удалось включить музыку:",
+                console.error(
+                    "Ошибка запуска музыки:",
                     error
                 );
 
@@ -419,36 +439,36 @@ function toggleMusic() {
     }
 
 
-    updateMusicButtons();
+    updateMusicButton();
 
 }
 
 
 /* =========================================
-   ОБНОВЛЕНИЕ КНОПКИ МУЗЫКИ
+   ИКОНКА МУЗЫКИ
 ========================================= */
 
-function updateMusicButtons() {
+function updateMusicButton() {
 
-    if (musicPlaying) {
+    musicButtons.forEach(button => {
 
-        musicButton.textContent = "🔊";
+        if (musicPlaying) {
 
-        finalMusicButton.textContent = "🔊";
+            button.textContent = "🔊";
 
-    } else {
+        } else {
 
-        musicButton.textContent = "🔇";
+            button.textContent = "🔇";
 
-        finalMusicButton.textContent = "🔇";
+        }
 
-    }
+    });
 
 }
 
 
 /* =========================================
-   СВАЙП НА ТЕЛЕФОНЕ
+   СВАЙП
 ========================================= */
 
 let touchStartX = 0;
@@ -486,11 +506,6 @@ function handleSwipe() {
         touchStartX - touchEndX;
 
 
-    /*
-       Слишком маленькое движение
-       не считается свайпом.
-    */
-
     if (Math.abs(difference) < 50) {
 
         return;
@@ -498,21 +513,11 @@ function handleSwipe() {
     }
 
 
-    /*
-       Свайп влево → следующее фото
-    */
-
     if (difference > 0) {
 
         nextPhoto();
 
-    }
-
-    /*
-       Свайп вправо → предыдущее фото
-    */
-
-    else {
+    } else {
 
         previousPhoto();
 
@@ -522,7 +527,7 @@ function handleSwipe() {
 
 
 /* =========================================
-   КЛАВИАТУРА КОМПЬЮТЕРА
+   КЛАВИАТУРА
 ========================================= */
 
 document.addEventListener(
