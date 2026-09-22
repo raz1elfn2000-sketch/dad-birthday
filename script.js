@@ -56,9 +56,7 @@ const photos = [
 ========================================= */
 
 let currentPhoto = 0;
-
 let autoSlide = null;
-
 let musicPlaying = false;
 
 
@@ -109,55 +107,51 @@ function startMemories() {
 
     finalScreen.style.display = "none";
 
-
-    /*
-       На всякий случай
-       кнопка финала снова скрыта.
-    */
+    currentPhoto = 0;
 
     finishButton.style.display = "none";
 
-
-    /*
-       Первая фотография
-    */
-
-    currentPhoto = 0;
-
     showPhoto(currentPhoto);
-
-
-    /*
-       Запускаем автоматическую смену
-    */
 
     startAutoSlide();
 
 
-    /*
-       ЗАПУСКАЕМ МУЗЫКУ
-    */
-
-    music.currentTime = 0;
+    /* ================================
+       ЗАПУСК МУЗЫКИ
+    ================================= */
 
     music.volume = 0.45;
 
-    music.play()
-        .then(() => {
+    music.currentTime = 0;
 
-            musicPlaying = true;
+    const playPromise = music.play();
 
-            updateMusicButton();
+    if (playPromise !== undefined) {
 
-        })
-        .catch((error) => {
+        playPromise
+            .then(() => {
 
-            console.error(
-                "Ошибка запуска музыки:",
-                error
-            );
+                musicPlaying = true;
 
-        });
+                updateMusicButton();
+
+                console.log("Музыка запущена");
+
+            })
+            .catch((error) => {
+
+                musicPlaying = false;
+
+                updateMusicButton();
+
+                console.error(
+                    "Не удалось запустить музыку:",
+                    error
+                );
+
+            });
+
+    }
 
 }
 
@@ -169,44 +163,32 @@ function startMemories() {
 function showPhoto(index) {
 
     if (index < 0) {
-
-        index = photos.length - 1;
-
+        index = 0;
     }
-
 
     if (index >= photos.length) {
-
         index = photos.length - 1;
-
     }
-
 
     currentPhoto = index;
 
 
-    /*
-       Анимация
-    */
+    /* Анимация */
 
     mainPhoto.style.opacity = "0";
 
-    mainPhoto.style.transform =
-        "scale(0.98)";
+    mainPhoto.style.transform = "scale(0.98)";
 
 
     setTimeout(() => {
 
-        mainPhoto.src =
-            photos[currentPhoto];
-
+        mainPhoto.src = photos[currentPhoto];
 
         mainPhoto.onload = () => {
 
             mainPhoto.style.opacity = "1";
 
-            mainPhoto.style.transform =
-                "scale(1)";
+            mainPhoto.style.transform = "scale(1)";
 
         };
 
@@ -216,27 +198,18 @@ function showPhoto(index) {
     updateInterface();
 
 
-    /*
-       ПРОВЕРЯЕМ:
-       если это 40-я фотография
-    */
+    /* =================================
+       ПРОВЕРКА 40-Й ФОТОГРАФИИ
+    ================================= */
 
     if (currentPhoto === photos.length - 1) {
 
         clearInterval(autoSlide);
 
-        /*
-           Показываем кнопку финала
-        */
-
         finishButton.style.display =
             "inline-block";
 
     } else {
-
-        /*
-           До 40-й кнопка скрыта
-        */
 
         finishButton.style.display =
             "none";
@@ -247,14 +220,12 @@ function showPhoto(index) {
 
 
 /* =========================================
-   ИНФОРМАЦИЯ
+   ИНТЕРФЕЙС
 ========================================= */
 
 function updateInterface() {
 
-    const number =
-        currentPhoto + 1;
-
+    const number = currentPhoto + 1;
 
     const formattedNumber =
         String(number).padStart(2, "0");
@@ -284,17 +255,11 @@ function updateInterface() {
 
 function nextPhoto() {
 
-    /*
-       Если уже 40-я —
-       дальше не идём.
-    */
-
     if (currentPhoto >= photos.length - 1) {
 
         return;
 
     }
-
 
     showPhoto(currentPhoto + 1);
 
@@ -308,10 +273,6 @@ function nextPhoto() {
 ========================================= */
 
 function previousPhoto() {
-
-    /*
-       Можно вернуться назад
-    */
 
     if (currentPhoto > 0) {
 
@@ -332,7 +293,6 @@ function startAutoSlide() {
 
     clearInterval(autoSlide);
 
-
     autoSlide = setInterval(() => {
 
         if (currentPhoto >= photos.length - 1) {
@@ -343,7 +303,6 @@ function startAutoSlide() {
 
         }
 
-
         showPhoto(currentPhoto + 1);
 
     }, 4500);
@@ -352,7 +311,7 @@ function startAutoSlide() {
 
 
 /* =========================================
-   RESTART
+   RESTART AUTO SLIDE
 ========================================= */
 
 function restartAutoSlide() {
@@ -371,8 +330,8 @@ function restartAutoSlide() {
 function showFinal() {
 
     /*
-       На всякий случай разрешаем
-       финал только после 40-й.
+       Финал разрешён ТОЛЬКО
+       после 40-й фотографии.
     */
 
     if (currentPhoto !== photos.length - 1) {
@@ -394,6 +353,9 @@ function showFinal() {
        Музыку НЕ останавливаем.
     */
 
+    updateMusicButton();
+
+
     window.scrollTo({
 
         top: 0,
@@ -411,13 +373,7 @@ function showFinal() {
 
 function toggleMusic() {
 
-    if (musicPlaying) {
-
-        music.pause();
-
-        musicPlaying = false;
-
-    } else {
+    if (music.paused) {
 
         music.play()
             .then(() => {
@@ -436,10 +392,15 @@ function toggleMusic() {
 
             });
 
+    } else {
+
+        music.pause();
+
+        musicPlaying = false;
+
+        updateMusicButton();
+
     }
-
-
-    updateMusicButton();
 
 }
 
@@ -452,7 +413,7 @@ function updateMusicButton() {
 
     musicButtons.forEach(button => {
 
-        if (musicPlaying) {
+        if (!music.paused) {
 
             button.textContent = "🔊";
 
@@ -468,7 +429,7 @@ function updateMusicButton() {
 
 
 /* =========================================
-   СВАЙП
+   СВАЙП НА ТЕЛЕФОНЕ
 ========================================= */
 
 let touchStartX = 0;
@@ -549,3 +510,12 @@ document.addEventListener(
 
     }
 );
+
+
+/* =========================================
+   НАЧАЛЬНОЕ СОСТОЯНИЕ
+========================================= */
+
+updateMusicButton();
+
+
