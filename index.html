@@ -7,7 +7,7 @@
 
     <title>Әкешім, туған күніңізбен! ❤️</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
@@ -30,7 +30,10 @@
                 Сізге арналған кішкентай сыйлығым
             </p>
 
-            <button class="start-button" onclick="startMemories()">
+            <button
+                class="start-button"
+                onclick="startMemories()"
+            >
                 Сыйлықты ашу
                 <span>→</span>
             </button>
@@ -41,7 +44,11 @@
 
 
     <!-- ГАЛЕРЕЯ -->
-    <main class="gallery" id="gallery" style="display: none;">
+    <main
+        class="gallery"
+        id="gallery"
+        style="display: none;"
+    >
 
         <div class="gallery-header">
 
@@ -55,7 +62,10 @@
 
             </div>
 
-            <div class="counter" id="counter">
+            <div
+                class="counter"
+                id="counter"
+            >
                 01 / 40
             </div>
 
@@ -64,25 +74,36 @@
 
         <div class="photo-container">
 
-            <button class="arrow" onclick="previousPhoto()">
+            <button
+                class="arrow"
+                onclick="previousPhoto()"
+            >
                 ←
             </button>
+
 
             <div class="photo-wrapper">
 
                 <img
                     id="mainPhoto"
-                    src="photos/01.jpg"
+                    src="./photos/01.jpg"
                     alt="Отбасылық сурет"
                 >
 
-                <div class="photo-number" id="photoNumber">
+                <div
+                    class="photo-number"
+                    id="photoNumber"
+                >
                     01
                 </div>
 
             </div>
 
-            <button class="arrow" onclick="nextPhoto()">
+
+            <button
+                class="arrow"
+                onclick="nextPhoto()"
+            >
                 →
             </button>
 
@@ -95,6 +116,7 @@
                 Әрбір сәт — өз алдына бір естелік.
             </p>
 
+
             <div class="progress">
 
                 <div
@@ -105,7 +127,7 @@
             </div>
 
 
-            <!-- ФИНАЛЬНАЯ КНОПКА -->
+            <!-- КНОПКА ПОЯВИТСЯ ТОЛЬКО НА 40-Й ФОТО -->
             <button
                 class="finish-button"
                 id="finishButton"
@@ -119,13 +141,13 @@
         </div>
 
 
-        <!-- МУЗЫКА -->
+        <!-- КНОПКА МУЗЫКИ -->
         <button
             class="music-button"
             id="musicButton"
             onclick="toggleMusic()"
         >
-            🔊
+            🔇
         </button>
 
     </main>
@@ -144,9 +166,11 @@
                 ♥
             </div>
 
+
             <h2>
                 Әкешім,
             </h2>
+
 
             <p class="final-text">
 
@@ -170,9 +194,11 @@
 
             </p>
 
+
             <h3>
                 Туған күніңіз құтты болсын! ❤️
             </h3>
+
 
             <div class="signature">
 
@@ -188,25 +214,33 @@
             class="music-button"
             onclick="toggleMusic()"
         >
-            🔊
+            🔇
         </button>
 
     </section>
 
 
-    <!-- МУЗЫКА -->
-    <!-- ФАЙЛ music.mp3 ЛЕЖИТ РЯДОМ С index.html -->
+    <!--
+        МУЗЫКА
+
+        music.mp3 находится РЯДОМ с index.html
+    -->
     <audio
         id="backgroundMusic"
-        src="music.mp3"
+        src="./music.mp3"
         preload="auto"
         loop
     ></audio>
 
 
-    <script src="script.js"></script>
+    <!-- ВАЖНО:
+         script.js подключается ТОЛЬКО ОДИН РАЗ
+    -->
+    <script src="./script.js"></script>
 
 </body>
+
 </html>
+
 
 
