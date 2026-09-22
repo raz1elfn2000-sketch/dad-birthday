@@ -1,5 +1,5 @@
 /* =========================================
-   ФОТОГРАФИИ
+   ФОТОГРАФИЯЛАР
 ========================================= */
 
 const photos = [
@@ -59,58 +59,137 @@ let currentPhoto = 0;
 
 let autoSlide;
 
+let musicPlaying = false;
+
 
 /* =========================================
-   ЭЛЕМЕНТЫ
+   МУЗЫКА
 ========================================= */
 
-const welcome = document.getElementById("welcome");
+const music = new Audio("music/music.mp3");
 
-const gallery = document.getElementById("gallery");
+music.loop = true;
 
-const finalScreen = document.getElementById("final");
-
-const mainPhoto = document.getElementById("mainPhoto");
-
-const counter = document.getElementById("counter");
-
-const photoNumber = document.getElementById("photoNumber");
-
-const progressBar = document.getElementById("progressBar");
+music.volume = 0.45;
 
 
 /* =========================================
-   НАЧАЛО
+   ЭЛЕМЕНТЫ СТРАНИЦЫ
+========================================= */
+
+const welcome =
+    document.getElementById("welcome");
+
+const gallery =
+    document.getElementById("gallery");
+
+const finalScreen =
+    document.getElementById("final");
+
+const mainPhoto =
+    document.getElementById("mainPhoto");
+
+const counter =
+    document.getElementById("counter");
+
+const photoNumber =
+    document.getElementById("photoNumber");
+
+const progressBar =
+    document.getElementById("progressBar");
+
+const musicButton =
+    document.getElementById("musicButton");
+
+const finalMusicButton =
+    document.getElementById("finalMusicButton");
+
+
+/* =========================================
+   НАЧАЛО ПОДАРКА
 ========================================= */
 
 function startMemories() {
 
+    /*
+       Прячем первый экран
+    */
+
     welcome.style.display = "none";
+
+
+    /*
+       Показываем фотографии
+    */
 
     gallery.style.display = "flex";
 
+
+    /*
+       Прячем финал
+    */
+
     finalScreen.style.display = "none";
+
+
+    /*
+       Показываем первую фотографию
+    */
 
     showPhoto(0);
 
+
+    /*
+       Начинаем автоматическую смену
+    */
+
     startAutoSlide();
+
+
+    /*
+       И самое главное —
+       запускаем музыку после нажатия кнопки
+    */
+
+    music.play()
+        .then(() => {
+
+            musicPlaying = true;
+
+            updateMusicButtons();
+
+        })
+        .catch((error) => {
+
+            console.log(
+                "Музыку не удалось запустить:",
+                error
+            );
+
+        });
 
 }
 
 
 /* =========================================
-   ПОКАЗ ФОТО
+   ПОКАЗ ФОТОГРАФИИ
 ========================================= */
 
 function showPhoto(index) {
 
     if (index < 0) {
+
         index = photos.length - 1;
+
     }
 
+
     if (index >= photos.length) {
+
         index = 0;
+
     }
+
 
     currentPhoto = index;
 
@@ -126,13 +205,16 @@ function showPhoto(index) {
 
     setTimeout(() => {
 
-        mainPhoto.src = photos[currentPhoto];
+        mainPhoto.src =
+            photos[currentPhoto];
+
 
         mainPhoto.onload = () => {
 
             mainPhoto.style.opacity = "1";
 
-            mainPhoto.style.transform = "scale(1)";
+            mainPhoto.style.transform =
+                "scale(1)";
 
         };
 
@@ -145,18 +227,22 @@ function showPhoto(index) {
 
 
 /* =========================================
-   ИНФОРМАЦИЯ ПОД ФОТО
+   ОБНОВЛЕНИЕ СЧЁТЧИКА
 ========================================= */
 
 function updateInterface() {
 
-    const number = currentPhoto + 1;
+    const number =
+        currentPhoto + 1;
+
 
     const formattedNumber =
         String(number).padStart(2, "0");
 
+
     counter.textContent =
         `${formattedNumber} / ${photos.length}`;
+
 
     photoNumber.textContent =
         formattedNumber;
@@ -165,6 +251,7 @@ function updateInterface() {
     const progress =
         (number / photos.length) * 100;
 
+
     progressBar.style.width =
         `${progress}%`;
 
@@ -172,10 +259,25 @@ function updateInterface() {
 
 
 /* =========================================
-   СЛЕДУЮЩЕЕ ФОТО
+   СЛЕДУЮЩАЯ ФОТОГРАФИЯ
 ========================================= */
 
 function nextPhoto() {
+
+    /*
+       Если сейчас 40-я фотография,
+       дальше автоматически не переходим
+       к первой.
+    */
+
+    if (currentPhoto === photos.length - 1) {
+
+        clearInterval(autoSlide);
+
+        return;
+
+    }
+
 
     showPhoto(currentPhoto + 1);
 
@@ -185,7 +287,7 @@ function nextPhoto() {
 
 
 /* =========================================
-   ПРЕДЫДУЩЕЕ ФОТО
+   ПРЕДЫДУЩАЯ ФОТОГРАФИЯ
 ========================================= */
 
 function previousPhoto() {
@@ -203,7 +305,24 @@ function previousPhoto() {
 
 function startAutoSlide() {
 
+    clearInterval(autoSlide);
+
+
     autoSlide = setInterval(() => {
+
+        /*
+           Если дошли до 40-й фотографии,
+           останавливаем автоматическую смену.
+        */
+
+        if (currentPhoto >= photos.length - 1) {
+
+            clearInterval(autoSlide);
+
+            return;
+
+        }
+
 
         showPhoto(currentPhoto + 1);
 
@@ -226,21 +345,104 @@ function restartAutoSlide() {
 
 
 /* =========================================
-   ФИНАЛ
+   ПОКАЗ ФИНАЛА
 ========================================= */
 
 function showFinal() {
 
+    /*
+       Останавливаем смену фотографий
+    */
+
     clearInterval(autoSlide);
+
+
+    /*
+       Прячем галерею
+    */
 
     gallery.style.display = "none";
 
+
+    /*
+       Показываем финальное поздравление
+    */
+
     finalScreen.style.display = "flex";
 
+
+    /*
+       Музыку НЕ останавливаем.
+       Она продолжает играть.
+    */
+
     window.scrollTo({
+
         top: 0,
+
         behavior: "smooth"
+
     });
+
+}
+
+
+/* =========================================
+   МУЗЫКА ON / OFF
+========================================= */
+
+function toggleMusic() {
+
+    if (musicPlaying) {
+
+        music.pause();
+
+        musicPlaying = false;
+
+    } else {
+
+        music.play()
+            .then(() => {
+
+                musicPlaying = true;
+
+            })
+            .catch((error) => {
+
+                console.log(
+                    "Не удалось включить музыку:",
+                    error
+                );
+
+            });
+
+    }
+
+
+    updateMusicButtons();
+
+}
+
+
+/* =========================================
+   ОБНОВЛЕНИЕ КНОПКИ МУЗЫКИ
+========================================= */
+
+function updateMusicButtons() {
+
+    if (musicPlaying) {
+
+        musicButton.textContent = "🔊";
+
+        finalMusicButton.textContent = "🔊";
+
+    } else {
+
+        musicButton.textContent = "🔇";
+
+        finalMusicButton.textContent = "🔇";
+
+    }
 
 }
 
@@ -254,22 +456,28 @@ let touchStartX = 0;
 let touchEndX = 0;
 
 
-mainPhoto.addEventListener("touchstart", function(event) {
+mainPhoto.addEventListener(
+    "touchstart",
+    function(event) {
 
-    touchStartX =
-        event.changedTouches[0].screenX;
+        touchStartX =
+            event.changedTouches[0].screenX;
 
-});
+    }
+);
 
 
-mainPhoto.addEventListener("touchend", function(event) {
+mainPhoto.addEventListener(
+    "touchend",
+    function(event) {
 
-    touchEndX =
-        event.changedTouches[0].screenX;
+        touchEndX =
+            event.changedTouches[0].screenX;
 
-    handleSwipe();
+        handleSwipe();
 
-});
+    }
+);
 
 
 function handleSwipe() {
@@ -278,16 +486,33 @@ function handleSwipe() {
         touchStartX - touchEndX;
 
 
+    /*
+       Слишком маленькое движение
+       не считается свайпом.
+    */
+
     if (Math.abs(difference) < 50) {
+
         return;
+
     }
 
+
+    /*
+       Свайп влево → следующее фото
+    */
 
     if (difference > 0) {
 
         nextPhoto();
 
-    } else {
+    }
+
+    /*
+       Свайп вправо → предыдущее фото
+    */
+
+    else {
 
         previousPhoto();
 
@@ -297,22 +522,25 @@ function handleSwipe() {
 
 
 /* =========================================
-   КЛАВИАТУРА
+   КЛАВИАТУРА КОМПЬЮТЕРА
 ========================================= */
 
-document.addEventListener("keydown", function(event) {
+document.addEventListener(
+    "keydown",
+    function(event) {
 
-    if (event.key === "ArrowRight") {
+        if (event.key === "ArrowRight") {
 
-        nextPhoto();
+            nextPhoto();
+
+        }
+
+
+        if (event.key === "ArrowLeft") {
+
+            previousPhoto();
+
+        }
 
     }
-
-
-    if (event.key === "ArrowLeft") {
-
-        previousPhoto();
-
-    }
-
-});
+);
