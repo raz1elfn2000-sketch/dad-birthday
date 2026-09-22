@@ -4,49 +4,49 @@
 
 const photos = [
 
-    "photos/01.jpg",
-    "photos/02.jpg",
-    "photos/03.jpg",
-    "photos/04.jpg",
-    "photos/05.jpg",
-    "photos/06.jpg",
-    "photos/07.jpg",
-    "photos/08.jpg",
-    "photos/09.jpg",
-    "photos/10.jpg",
+    "./photos/01.jpg",
+    "./photos/02.jpg",
+    "./photos/03.jpg",
+    "./photos/04.jpg",
+    "./photos/05.jpg",
+    "./photos/06.jpg",
+    "./photos/07.jpg",
+    "./photos/08.jpg",
+    "./photos/09.jpg",
+    "./photos/10.jpg",
 
-    "photos/11.jpg",
-    "photos/12.jpg",
-    "photos/13.jpg",
-    "photos/14.jpg",
-    "photos/15.jpg",
-    "photos/16.jpg",
-    "photos/17.jpg",
-    "photos/18.jpg",
-    "photos/19.jpg",
-    "photos/20.jpg",
+    "./photos/11.jpg",
+    "./photos/12.jpg",
+    "./photos/13.jpg",
+    "./photos/14.jpg",
+    "./photos/15.jpg",
+    "./photos/16.jpg",
+    "./photos/17.jpg",
+    "./photos/18.jpg",
+    "./photos/19.jpg",
+    "./photos/20.jpg",
 
-    "photos/21.jpg",
-    "photos/22.jpg",
-    "photos/23.jpg",
-    "photos/24.jpg",
-    "photos/25.jpg",
-    "photos/26.jpg",
-    "photos/27.jpg",
-    "photos/28.jpg",
-    "photos/29.jpg",
-    "photos/30.jpg",
+    "./photos/21.jpg",
+    "./photos/22.jpg",
+    "./photos/23.jpg",
+    "./photos/24.jpg",
+    "./photos/25.jpg",
+    "./photos/26.jpg",
+    "./photos/27.jpg",
+    "./photos/28.jpg",
+    "./photos/29.jpg",
+    "./photos/30.jpg",
 
-    "photos/31.jpg",
-    "photos/32.jpg",
-    "photos/33.jpg",
-    "photos/34.jpg",
-    "photos/35.jpg",
-    "photos/36.jpg",
-    "photos/37.jpg",
-    "photos/38.jpg",
-    "photos/39.jpg",
-    "photos/40.jpg"
+    "./photos/31.jpg",
+    "./photos/32.jpg",
+    "./photos/33.jpg",
+    "./photos/34.jpg",
+    "./photos/35.jpg",
+    "./photos/36.jpg",
+    "./photos/37.jpg",
+    "./photos/38.jpg",
+    "./photos/39.jpg",
+    "./photos/40.jpg"
 
 ];
 
@@ -57,7 +57,6 @@ const photos = [
 
 let currentPhoto = 0;
 let autoSlide = null;
-let musicPlaying = false;
 
 
 /* =========================================
@@ -101,57 +100,70 @@ const musicButtons =
 
 function startMemories() {
 
+    /* Скрываем стартовый экран */
+
     welcome.style.display = "none";
+
+
+    /* Показываем галерею */
 
     gallery.style.display = "flex";
 
+
+    /* Скрываем финал */
+
     finalScreen.style.display = "none";
+
+
+    /* Начинаем с первой фотографии */
 
     currentPhoto = 0;
 
+
+    /* Скрываем кнопку финала */
+
     finishButton.style.display = "none";
 
+
+    /* Показываем первую фотографию */
+
     showPhoto(currentPhoto);
+
+
+    /* Запускаем автоматическую смену */
 
     startAutoSlide();
 
 
-    /* ================================
+    /* =====================================
        ЗАПУСК МУЗЫКИ
-    ================================= */
+       Происходит непосредственно после
+       нажатия пользователем кнопки.
+    ===================================== */
 
     music.volume = 0.45;
 
     music.currentTime = 0;
 
-    const playPromise = music.play();
 
-    if (playPromise !== undefined) {
+    music.play()
+        .then(() => {
 
-        playPromise
-            .then(() => {
+            updateMusicButton();
 
-                musicPlaying = true;
+            console.log("Музыка успешно запущена");
 
-                updateMusicButton();
+        })
+        .catch((error) => {
 
-                console.log("Музыка запущена");
+            console.error(
+                "Ошибка запуска музыки:",
+                error
+            );
 
-            })
-            .catch((error) => {
+            updateMusicButton();
 
-                musicPlaying = false;
-
-                updateMusicButton();
-
-                console.error(
-                    "Не удалось запустить музыку:",
-                    error
-                );
-
-            });
-
-    }
+        });
 
 }
 
@@ -162,18 +174,26 @@ function startMemories() {
 
 function showPhoto(index) {
 
+    /* Защита от выхода за границы */
+
     if (index < 0) {
+
         index = 0;
+
     }
 
+
     if (index >= photos.length) {
+
         index = photos.length - 1;
+
     }
+
 
     currentPhoto = index;
 
 
-    /* Анимация */
+    /* Анимация исчезновения */
 
     mainPhoto.style.opacity = "0";
 
@@ -183,6 +203,7 @@ function showPhoto(index) {
     setTimeout(() => {
 
         mainPhoto.src = photos[currentPhoto];
+
 
         mainPhoto.onload = () => {
 
@@ -198,13 +219,19 @@ function showPhoto(index) {
     updateInterface();
 
 
-    /* =================================
-       ПРОВЕРКА 40-Й ФОТОГРАФИИ
-    ================================= */
+    /* =====================================
+       40-Я ФОТОГРАФИЯ
+    ===================================== */
 
     if (currentPhoto === photos.length - 1) {
 
         clearInterval(autoSlide);
+
+
+        /*
+           Кнопка финала появляется
+           ТОЛЬКО на 40-й фотографии
+        */
 
         finishButton.style.display =
             "inline-block";
@@ -220,12 +247,14 @@ function showPhoto(index) {
 
 
 /* =========================================
-   ИНТЕРФЕЙС
+   ОБНОВЛЕНИЕ ИНТЕРФЕЙСА
 ========================================= */
 
 function updateInterface() {
 
-    const number = currentPhoto + 1;
+    const number =
+        currentPhoto + 1;
+
 
     const formattedNumber =
         String(number).padStart(2, "0");
@@ -250,10 +279,15 @@ function updateInterface() {
 
 
 /* =========================================
-   NEXT
+   СЛЕДУЮЩАЯ ФОТОГРАФИЯ
 ========================================= */
 
 function nextPhoto() {
+
+    /*
+       Если уже 40-я —
+       дальше не идём.
+    */
 
     if (currentPhoto >= photos.length - 1) {
 
@@ -261,7 +295,9 @@ function nextPhoto() {
 
     }
 
+
     showPhoto(currentPhoto + 1);
+
 
     restartAutoSlide();
 
@@ -269,31 +305,40 @@ function nextPhoto() {
 
 
 /* =========================================
-   PREVIOUS
+   ПРЕДЫДУЩАЯ ФОТОГРАФИЯ
 ========================================= */
 
 function previousPhoto() {
 
-    if (currentPhoto > 0) {
+    if (currentPhoto <= 0) {
 
-        showPhoto(currentPhoto - 1);
-
-        restartAutoSlide();
+        return;
 
     }
+
+
+    showPhoto(currentPhoto - 1);
+
+
+    restartAutoSlide();
 
 }
 
 
 /* =========================================
-   АВТОСЛАЙД
+   АВТОМАТИЧЕСКАЯ СМЕНА
 ========================================= */
 
 function startAutoSlide() {
 
     clearInterval(autoSlide);
 
+
     autoSlide = setInterval(() => {
+
+        /*
+           На 40-й останавливаемся.
+        */
 
         if (currentPhoto >= photos.length - 1) {
 
@@ -303,6 +348,7 @@ function startAutoSlide() {
 
         }
 
+
         showPhoto(currentPhoto + 1);
 
     }, 4500);
@@ -311,7 +357,7 @@ function startAutoSlide() {
 
 
 /* =========================================
-   RESTART AUTO SLIDE
+   ПЕРЕЗАПУСК АВТОСЛАЙДА
 ========================================= */
 
 function restartAutoSlide() {
@@ -330,8 +376,9 @@ function restartAutoSlide() {
 function showFinal() {
 
     /*
-       Финал разрешён ТОЛЬКО
-       после 40-й фотографии.
+       НЕЛЬЗЯ перейти к финалу,
+       пока не просмотрена 40-я
+       фотография.
     */
 
     if (currentPhoto !== photos.length - 1) {
@@ -344,13 +391,23 @@ function showFinal() {
     clearInterval(autoSlide);
 
 
+    /*
+       Скрываем галерею
+    */
+
     gallery.style.display = "none";
+
+
+    /*
+       Показываем финал
+    */
 
     finalScreen.style.display = "flex";
 
 
     /*
        Музыку НЕ останавливаем.
+       Она продолжает играть.
     */
 
     updateMusicButton();
@@ -373,53 +430,60 @@ function showFinal() {
 
 function toggleMusic() {
 
-    if (music.paused) {
+    /*
+       Если музыка сейчас играет —
+       ставим на паузу.
+    */
 
-        music.play()
-            .then(() => {
-
-                musicPlaying = true;
-
-                updateMusicButton();
-
-            })
-            .catch((error) => {
-
-                console.error(
-                    "Ошибка запуска музыки:",
-                    error
-                );
-
-            });
-
-    } else {
+    if (!music.paused) {
 
         music.pause();
 
-        musicPlaying = false;
-
         updateMusicButton();
 
+        return;
+
     }
+
+
+    /*
+       Если музыка стоит на паузе —
+       запускаем.
+    */
+
+    music.play()
+        .then(() => {
+
+            updateMusicButton();
+
+        })
+        .catch((error) => {
+
+            console.error(
+                "Ошибка запуска музыки:",
+                error
+            );
+
+        });
 
 }
 
 
 /* =========================================
-   ИКОНКА МУЗЫКИ
+   КНОПКА МУЗЫКИ
 ========================================= */
 
 function updateMusicButton() {
 
     musicButtons.forEach(button => {
 
-        if (!music.paused) {
+        if (music.paused) {
 
-            button.textContent = "🔊";
+            button.textContent = "🔇";
 
         } else {
 
-            button.textContent = "🔇";
+            button.textContent = "🔊";
 
         }
 
@@ -433,7 +497,6 @@ function updateMusicButton() {
 ========================================= */
 
 let touchStartX = 0;
-
 let touchEndX = 0;
 
 
